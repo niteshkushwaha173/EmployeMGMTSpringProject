@@ -1,24 +1,28 @@
+# Java version pom.xml ki <java.version> se match honi chahiye (17 / 21 / 25)
+ARG JAVA_VERSION=25
+
 # ---- Build stage ----
-FROM maven:3.9-eclipse-temurin-17 AS build
+FROM maven:3.9-eclipse-temurin-${JAVA_VERSION} AS build
 WORKDIR /app
 
-# Copy only pom.xml first to leverage Docker layer caching for dependencies
+# Pehle sirf pom.xml copy karo taaki dependencies ka Docker layer cache ho
 COPY pom.xml .
 RUN mvn dependency:go-offline -B
 
-# Now copy the rest of the source and build
+# Ab source copy karke build karo
 COPY src ./src
 RUN mvn clean package -DskipTests -B
 
 # ---- Run stage ----
-FROM eclipse-temurin:17-jre
+FROM eclipse-temurin:${JAVA_VERSION}-jre
 WORKDIR /app
 
-# Copy the built jar from the build stage
 COPY --from=build /app/target/*.jar app.jar
 
-# Render (and most PaaS) inject PORT; Spring Boot reads it via SERVER_PORT
-ENV SERVER_PORT=8284
+# Port: Render PORT deta hai aur application.properties mein
+# server.port=${PORT:${SERVER_PORT:8284}} hai.
+# Yahan ENV SERVER_PORT set mat karo, wo properties file ko override kar deta hai.
 EXPOSE 8284
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# MaxRAMPercentage: free tier ki chhoti memory mein app crash na ho
+ENTRYPOINT ["java", "-XX:MaxRAMPercentage=75", "-jar", "app.jar"]
