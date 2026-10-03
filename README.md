@@ -72,4 +72,10 @@ mvn spring-boot:run
 ```bash
 cd ems-frontend
 npm install
-npm run dev
+npm run dev<img width="376" height="137" alt="Screenshot 2026-10-03 053013" src="https://github.com/user-attachments/assets/1e1704d8-58d6-4446-8f6f-a861f9dc4772" />
+<img width="1152" height="637" alt="Screenshot 2026-10-03 053029" src="https://github.com/user-attachments/assets/3843ad85-c247-46ee-8ce4-42d9e665c4b6" />
+<img width="1400" height="466" alt="Screenshot 2026-10-03 053121" src="https://github.com/user-attachments/assets/4ca6b698-7a13-4dcb-8117-35e020aba939" />
+<img width="1368" height="575" alt="Screenshot 2026-10-03 053349" src="https://github.com/user-attachments/assets/7e6ef9c3-5b65-41c0-af2d-06852344bd88" />
+
+
+
